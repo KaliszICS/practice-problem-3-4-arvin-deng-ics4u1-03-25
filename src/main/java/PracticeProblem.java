@@ -1,27 +1,47 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+
 public class PracticeProblem {
 
 	public static void main(String args[]) {
 
 	}
 
-	public static void q1() {
-		//Write question 1 code here
-	}
+	public static int[] recaman(int n) {
+        if (n <= 0) return new int[0];
 
-	public static void q2() {
-		//Write question 2 code here
-	}
+        ArrayList<Integer> fullSequence = new ArrayList<>();
+        HashSet<Integer> seen = new HashSet<>();
 
-	public static void q3() {
-		//Write question 3 code here
-	}
+        fullSequence.add(0); 
+        seen.add(0);
 
-	public static void q4() {
-		//Write question 4 code here
-	}
+        generateRecaman(n + 1, 1, fullSequence, seen);  
 
-	public static void q5() {
-		//Write question 5 code here
-	}
+        int[] result = new int[n];
+        for (int i = 0; i < n; i++) {
+            result[i] = fullSequence.get(i + 1);
+        }
+
+        return result;
+    }
+
+    private static void generateRecaman(int total, int index, ArrayList<Integer> sequence, HashSet<Integer> seen) {
+        if (sequence.size() >= total) return;
+
+        int last = sequence.get(sequence.size() - 1);
+        int candidate = last - index;
+
+        if (candidate > 0 && !seen.contains(candidate)) {
+            sequence.add(candidate);
+            seen.add(candidate);
+        } else {
+            candidate = last + index;
+            sequence.add(candidate);
+            seen.add(candidate);
+        }
+
+        generateRecaman(total, index + 1, sequence, seen);
+    }
 
 }
